@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Icon=image-jpeg
+Exec=waifu2x-helper %F
+Name=waifu2x
+Comment=Increase image quality
+Comment[ru_RU]=Увеличить качество изображений
+Name=waifu2x
+MimeType=image/bmp;image/jpeg;image/png;image/tiff;image/gif;

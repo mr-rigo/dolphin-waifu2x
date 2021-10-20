@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+import os
+from shlex import quote
+from typing import Tuple
+import argparse
+
+
+class Paths:
+
+    @staticmethod
+    def safe_path(path: str) -> str:
+        if not os.path.exists(path):
+            return path
+
+        is_dir = os.path.isdir(path)
+
+        if is_dir:
+            extension, name_and_path = None, None
+        else:
+            dot_cut = path.split('/')[-1].split('.')
+            extension = dot_cut[-1] if len(dot_cut) > 1 else ''
+            name_and_path = path[:-len(extension) - 1]
+
+        new_path, index = path, 1
+        while True:
+            if is_dir or not extension:
+                new_path = f'{path}_{index}'
+            else:
+                new_path = f'{name_and_path}_{index}.{extension}'
+            if not os.path.exists(new_path):
+                return new_path
+            index += 1
+
+    @staticmethod
+    def split(path: str) -> Tuple[str, str, str]:
+        start = path.rfind('/')
+        name = path[start + 1:]
+        y = name.rfind('.')
+
+        a = path[:start] if start != -1 else ''
+        b = name[:y]
+        c = name[y + 1:] if y != -1 else ''
+        return a, b, c
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('files', help='Files', nargs='*')
+parser.add_argument('--mode', choices=['noise', 'scale', 'noise-scale'])
+parser.add_argument('--noise', choices=['0', '1', '2', '3'])
+args = parser.parse_args()
+
+mode = f' --mode {args.mode} ' if args.mode else ''
+fix_noise_level = ' --noise-level {} '.format(args.noise) if args.noise else ''
+fix_noise_post = '_fix_noise' if args.noise else '_'
+
+for file in args.files:
+    file = os.path.abspath(file)
+    folder, name, ext = Paths.split(file)
+    new_file = f'{folder}/{name}_waifu2x_.{ext}'
+    new_file = Paths.safe_path(new_file)
+    command = f'waifu2x-converter-cpp {mode}{fix_noise_level}-i {quote(file)}  -o {quote(new_file)} --force-OpenCL'
+    os.system(command)

@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Icon=image-jpeg
+Name=waifu2x noise reduction
+Name[ru_RU]=waifu2x подавление шума
+Comment=Increase image quality
+Comment[ru_RU]=Увеличить качество изображений
+MimeType=image/bmp;image/jpeg;image/png;image/tiff;image/gif;
+Exec=waifu2x-helper %F --noise 3

@@ -1,0 +1,21 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+X-KDE-Priority=TopLevel
+X-KDE-Submenu=waifu2x
+Icon=image-jpeg
+MimeType=image/bmp;image/jpeg;image/png;image/tiff;image/gif;
+Actions=waifu2x;waifu2x-noise3;
+#X-KDE-StartupNotify=false
+#StartupNotify=false
+
+[Desktop Action waifu2x-noise3]
+Name=waifu2x noise reduction
+Name[ru]=waifu2x подавление шума
+Icon=image-jpeg
+Exec=waifu2x-helper %F --noise 3
+
+[Desktop Action waifu2x]
+Name=waifu2x
+Icon=image-jpeg
+Exec=waifu2x-helper %F
